@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>TO_DO</title>
+    <style>
+
+      h1{
+        text-align: center;
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    
+    <nav>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Navbar</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+              </li>
+              
+              <li class="nav-item">
+                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+              </li>
+            </ul>
+            <form class="d-flex">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+          </div>
+        </div>
+      </nav>
+    </nav>
+    <h1>To do list</h1>
+   <main>
+    
+  <div class="container col-6">
+
+    <div class="input-group mt-5 col-6">
+      <input type="text" id="inputdata" class="form-control" placeholder="Enter data" aria-label="Recipient's username" aria-describedby="basic-addon2">
+     <button id="add-btn" class="success">Add</button>
+    </div>
+      <ul id="parentList" class="list-group">
+        <li class="list-group-item d-flex justify-content-between"><h3 class="flex-grow-1">An item</h3>
+          <button class="btn btn-warning mx-2" onclick="editChapter(this)">Edit</button>
+          <button class="btn-danger" onclick="removeChapter(this)">Delete</button>
+          
+        </li>
+      </ul>
+    </div>
+  </div>
+
+
+   </main>
+   <script>
+    let addBtn=document.getElementById("add-btn");
+    addBtn.addEventListener("click",addchapter);
+    function addchapter(e){
+      let parentList=document.getElementById("parentList");
+
+      if(parentList.children[0].className == 'empty')
+      {
+        parentList.children[0].remove();
+      }
+     let currentbtn=e.currentTarget;
+     let currentInput=currentbtn.previousElementSibling;
+     //console.log(currentInput.value);
+      let newli=document.createElement('li');
+      //newli.classList.add('list-group-item');
+      newli.className="list-group-item d-flex justify-content-between";
+      newli.innerHTML=`<h3 class="flex-grow-1">${currentInput.value}</h3>
+      <button class="btn btn-warning mx-2" onclick="editChapter(this)">Edit</button>
+      <button class="btn-danger" onclick="removeChapter(this)">Delete</button>
+      `
+      
+      //console.log(parentList);
+      parentList.appendChild(newli);
+    
+    }
+    function removeChapter(currElement)
+    {
+      currElement.parentElement.remove();
+      let parentList=document.getElementById("parentList");
+      if(parentList.children.length==0)
+      {
+       let emptyMessage=document.createElement('h3');
+        emptyMessage.classList.add('empty')
+        emptyMessage.textContent="List is Empty !! Please add new content";
+        parentList.appendChild(emptyMessage);
+      }
+      
+    }
+
+    function editChapter(element)
+    {
+      
+      
+     if(element.textContent=="Done"){
+      element.textContent="Edit";
+      let currChapterName=element.previousElementSibling.value;
+      let currHeading=document.createElement('h3');
+      currHeading.className="flex-grow-1";
+      currHeading.textContent=currChapterName;
+      element.parentElement.replaceChild(currHeading,element.previousElementSibling);
+     } 
+     else
+     {
+      element.textContent="Done";
+      let currChapterName=element.previousElementSibling.textContent;
+      let currInput=document.createElement('input');
+      currInput.type="text";
+      currInput.className="form-control";
+      currInput.value=currChapterName;
+      //console.log(currInput.value);
+      element.parentElement.replaceChild(currInput,element.previousElementSibling);
+
+     }
+      
+    }
+
+
+   </script>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+  </body>
+</html>
